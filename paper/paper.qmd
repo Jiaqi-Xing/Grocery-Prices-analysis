@@ -1,253 +1,150 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Comparative Analysis of Discount Rates Across Grocery Vendors"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: [https://github.com/RohanAlexander/starter_folder](https://github.com/RohanAlexander/starter_folder)."
+  - Ariel Xing - Xinxiang Gao - John Zhang -Haoan Wang 
+thanks: "Code and data are available at: https://github.com/Jiaqi-Xing/Grocery-Prices-analysis"
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This study examines discount rate patterns among major grocery vendors, analyzing how discount levels vary by vendor and over time. By comparing average discount rates and observing monthly trends, the research highlights notable differences in both the overall discount levels and monthly discounting patterns among vendors. Additionally, a deeper examination reveals evidence of Simpson's Paradox, where aggregated discount trends obscure unique, vendor-specific monthly patterns. These findings provide a clearer understanding of retailer discounting practices, illustrating how vendors balance pricing strategies to attract consumers. This research is important as it informs consumers and businesses on discount dynamics, supporting more informed decision-making in the retail market."
 format: pdf
 number-sections: true
 bibliography: references.bib
 ---
-
 ```{r}
 #| include: false
 #| warning: false
 #| message: false
 
+library(ggplot2)
+library(readr)
 library(tidyverse)
-library(palmerpenguins)
+
+
+# Load the data
+vendor_avg <- read_csv("../data/Analysis_data/vendor_avg_discount_rate.csv")
+
+vendor_monthly_avg <- read_csv("../data/Analysis_data/vendor_monthly_avg_discount_rate.csv") 
+
+vendor_daily_avg <- read_csv("../data/Analysis_data/vendor_daily_avg_discount_rate.csv")        
 ```
-
-
 # Introduction
+In today’s competitive retail market, discounting has become a prevalent strategy for attracting and retaining customers. Major grocery vendors utilize discounting not only to drive immediate sales but also to build customer loyalty over time. Understanding the patterns and trends in discount rates across various retailers can provide valuable information about broader pricing strategies and the economic factors influencing these strategies. However, while discount rates offer useful data for consumers, they also present complexities, especially when comparing multiple vendors with distinct business models and market approaches. This paper seeks to address these complexities by exploring discount trends among several major grocery vendors.
 
-Overview paragraph
+Prior research has examined the role of discounting in retail, with findings suggesting that discount rates impact consumer behavior, brand loyalty, and purchasing decisions. However, few studies have systematically compared discounting practices across different grocery vendors over time. Additionally, aggregated discount data often obscures vendor-specific trends, leading to potentially misleading conclusions—a phenomenon known as Simpson's Paradox. This paradox occurs when trends observed in aggregated data contradict the patterns within individual groups, which is particularly relevant when analyzing discount rates across vendors with diverse pricing strategies. To address this gap, this paper investigates both aggregated and vendor-specific discount trends, revealing underlying patterns in grocery discounting.
 
-Estimand paragraph
+This study utilizes a dataset containing monthly average discount rates from eight major grocery vendors. Through graphical analysis, we examine each vendor's average discount rate, track monthly changes, and identify instances of Simpson's Paradox within the data. Our key finding is that vendors exhibit distinct average discount levels and unique month-to-month patterns in discounting. This variability, obscured by aggregated trends, underscores the importance of detailed analyses when evaluating discount practices across retailers.
 
-Results paragraph
-
-Why it matters paragraph
-
-Telegraphing paragraph: The remainder of this paper is structured as follows. @sec-data....
-
-
-
-
-
-
+Understanding these trends is important for retailers, consumers, and policymakers as it sheds light on the dynamics of discount strategies. For consumers, knowing which vendors offer higher or more stable discounts can guide purchasing decisions. For retailers, recognizing competitive discounting patterns can inform pricing strategies to attract customers. For policymakers, identifying discount trends can reveal aspects of market competitiveness and economic trends within the retail sector. The remainder of this paper is structured as follows: in @sec-data, we describe the dataset in detail, including the context, variables, and measurement approach used to capture real-world phenomena; in @sec-result, we examine the results, presenting key findings through graphs, tables, and statistical analysis; in @sec-discussion, we discuss the implications of our findings, addressing issues such as correlation versus causation, missing data, and potential sources of bias.
 # Data {#sec-data}
 
 ## Overview
+Our dataset contains detailed observations of product discount rates across eight grocery vendors: TandT, Walmart, SaveOnFoods, Metro, Galleria, Voila, Loblaws, NoFrills, over time. The primary goal of this dataset is to analyze vendor discount behavior and identify trends across various products and time periods. The data has been specifically organized to facilitate comparisons in average discount rates, with a focus on tracking fluctuations over daily and monthly timeframes for each vendor.
 
-We use the statistical programming language R [@citeR].... Our data [@shelter].... Following @tellingstories, we consider...
-
-Overview text
+Our data source [@data] was prepared using the SQLite programming language [@sqlite] to facilitate efficient handling and querying. Data simulation, testing, and visualization were performed using R [@citeR], with support from the packages readr [@readr] for data import, ggplot2 [@ggplot2] for plotting, and tidyverse [@tidyverse] for data manipulation. Inspired by the methods discussed in "Telling Stories with Data" [@tellingstories], we applied Simpson's Paradox to explore complex trends and relationships in our analysis.
 
 ## Measurement
 	
-Some paragraphs about how we go from a phenomena in the world to an entry in the dataset.
+The dataset comprises historical grocery prices compiled from the websites of top grocery retailers. Each price entry reflects the cost of individual products as displayed on each grocer's online platform, captured on specific dates to track price changes over time. Measurements include product attributes such as brand, category, size, and unit price, allowing for standardized comparisons across various retailers. The dataset spans multiple grocery categories, including fresh produce, dairy, meats, pantry staples, and household items, ensuring a broad representation of consumer goods. To measure seasonal or periodic price trends, data was recorded at regular intervals, such as weekly or monthly, across several years, providing insight into both short-term promotions and long-term pricing trends. Where applicable, discounts and promotions were documented alongside regular prices to capture fluctuations and offer a comprehensive view of each retailer's pricing strategy over time. This dataset serves as a valuable resource for analyzing price variability, inflation effects, and competitive pricing dynamics in the grocery market.
 
-## Outcome variables
+## Variables
+-Vendor: Identifies the grocery store or vendor offering the product. This variable allows for comparisons between different stores to determine which vendors generally offer higher or lower discounts.
 
-Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
+-Product_ID: A unique identifier for each product. Although individual product names are not part of the analysis, the product ID ensures that each item is consistently tracked for discount changes over time.
 
+-Current_Price: The present price of a product at a given point in time. This serves as a basis for calculating the discount rate.
 
+-Old_Price: The original or previous price of the product, which is used to calculate the discount percentage.
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+-Nowatime: The specific date for each observation, enabling trend analysis over time.
 
+Discount Rate: A constructed variable derived by calculating the percentage change between the old price and the current price. This variable provides insight into the magnitude of discounts and is essential for identifying which vendors offer the most significant price reductions.
+
+Date: The specific date for each observation, enabling trend analysis over time.
+
+## Constructed Variables
+- Average Discount Rate: This variable aggregates the average discount rate by vendor on a monthly, daily or total basis. It was constructed to help observe trends at a higher level and highlight any seasonal patterns.
+
+# Results {#sec-result}
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-total
+#| fig-cap: "Average Discount Rate by Vendor: shows the average discount rate (%) in 2024 across various grocery vendors: TandT, Walmart, SaveOnFoods, Metro, Galleria, Voila, Loblaws and NoFrills"
 #| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+#| fig-pos: "H"
+# Plot the data
+ggplot(vendor_avg, aes(x = reorder(vendor, avg_discount_rate), y = avg_discount_rate, fill = vendor)) +
+    geom_bar(stat = "identity") +
+    labs(title = "Average Discount Rate by Vendor",
+         x = "Vendor",
+         y = "Average Discount Rate (%)") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    coord_flip() 
 ```
 
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+The bar plot(@fig-total) illustrates the average discount rate offered by each vendor. TandT and Walmart have the highest average discount rates, suggesting they tend to offer more substantial discounts than other vendors. On the other hand, NoFrills and Loblaws exhibit lower average discount rates, indicating a more conservative approach to discounting. The differences in average discount rates across vendors highlight varying discounting strategies that may be influenced by each vendor's pricing policies, target market, or competitive positioning.
 
 ```{r}
-#| label: fig-planes
+#| label: fig-monthly
+#| fig-cap: "Monthly Average Discount Rate by Vendor: depicts the monthly average discount rate (%) for each vendor from February 2024 to November 2024."
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-pos: "H"
+
+# Convert year and month columns to a proper date format for time series plotting
+vendor_monthly_avg$date <- as.Date(with(vendor_monthly_avg, paste(year, month, "01", sep = "-")), "%Y-%m-%d")
+
+# Plot the data
+ggplot(vendor_monthly_avg, aes(x = date, y = avg_discount_rate, color = vendor, group = vendor)) +
+    geom_line() +
+    labs(title = "Monthly Average Discount Rate by Vendor",
+         x = "Date",
+         y = "Average Discount Rate (%)") +
+    theme_minimal() +
+    scale_x_date(date_labels = "%Y-%m", date_breaks = "1 month") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+The line graph(@fig-monthly) tracks the monthly average discount rate for each vendor over the observed time period. We see considerable month-to-month variation in discount rates for certain vendors, particularly for SaveOnFoods, which shows a significant dip around July 2024, and Walmart, which reaches a peak around August 2024. The fluctuating patterns suggest that some vendors adjust their discount rates dynamically in response to factors such as seasonal demand, competitive pricing, or inventory levels. The chart provides a detailed view of how each vendor's discount strategy evolves over time, with some vendors maintaining more stable rates and others showing notable shifts across the months.
+```{r}
+#| label: fig-paradox
 #| fig-cap: Relationship between wing length and width
 #| echo: false
 #| warning: false
 #| message: false
-
-analysis_data <- read_csv(here::here("data/02-analysis_data/analysis_data.csv"))
-
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
+#| fig-pos: "H"
+ggplot(vendor_daily_avg, aes(x = as.Date(date), y = avg_discount_rate, color = vendor)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(aes(group = vendor), method = "lm", se = FALSE) +  # Within-vendor trend lines
+  geom_smooth(data = vendor_daily_avg, aes(x = as.Date(date), y = avg_discount_rate), 
+              method = "lm", color = "black", linetype = "dashed", se = FALSE) +  # Overall trend line
+  labs(title = "Simpson's Paradox: Vendor Discount Trends",
+       x = "Date",
+       y = "Average Discount Rate",
+       color = "Vendor") +
+  theme_minimal()
 ```
+The scatter plot(@fig-paradox) with trend lines illustrates the discount rates of various vendors over time, revealing an instance of Simpson's Paradox. While the overall trend may suggest a gradual increase or stable average discount rate, the individual vendor trends differ significantly. For example, some vendors exhibit a more consistent discount rate (such as Loblaws and Metro), while others, like TandT and Walmart, show more variability. This discrepancy between aggregate and individual trends highlights the importance of examining vendor-specific data to avoid drawing misleading conclusions from the aggregate trend alone.
 
-Talk way more about it. 
+# Discussion{#sec-discussion}
 
-## Predictor variables
+## Correlation vs. Causation
+The graphs reveal clear associations between vendors and their average discount rates, as well as month-to-month variations in discount trends. The bar chart in @fig-total shows different average discount rates across vendors, with TandT and Walmart offering higher discounts on average than other vendors. Similarly, the line chart in @fig-monthly shows monthly fluctuations for each vendor, suggesting that vendors adjust their discounts dynamically, potentially in response to market factors, seasonality, or promotional strategies. However, while these patterns suggest correlations between vendor identity and discount rate behaviors, they do not imply causation.
 
-Add graphs, tables and text.
+It is important to recognize that factors not captured in the dataset could influence discount trends. For instance, external factors like competitive pricing, supply chain costs, and consumer demand may impact a vendor's discounting strategy over time. Without data on these underlying factors, it is impossible to determine if the vendors' identities directly cause the observed discount patterns. As such, while the analysis highlights associations, we cannot conclude that being a specific vendor causes particular discounting behaviors. Further research with additional data would be required to explore causal mechanisms behind these trends.
 
-Use sub-sub-headings for each outcome variable and feel free to combine a few into one if they go together naturally.
+## Missing Data
+The accuracy and representativeness of our analysis depend on the completeness of the data for each vendor over the observed period. If any data points were missing for certain months or vendors, this could impact the trends seen in @fig-monthly and the average discount rates shown in @fig-total. For example, if a vendor’s data were missing for a period when discounts were typically high or low, it could skew the average discount rate, leading to misrepresentations in the comparative analysis.
 
+In @fig-daily, which depicts Simpson's Paradox, missing data points could further exacerbate discrepancies between aggregate and vendor-specific trends. If discount records for certain vendors were inconsistent, this could make it difficult to discern actual trends. Handling missing data carefully is essential to avoid biases in our interpretation. In this analysis, any such gaps would affect our ability to capture accurate month-to-month fluctuations or correctly interpret vendor-specific trends. Future studies should strive to include complete datasets or apply robust imputation techniques to fill any missing values, ensuring that the analysis reflects a fuller picture of discount patterns.
 
+## Sources of Bias
+Several potential sources of bias may have influenced the findings in these graphs. First, selection bias may arise if the dataset disproportionately represents vendors known for higher or lower discounting behaviors. For instance, if vendors with frequent promotions or seasonal discounts are overrepresented, this could artificially elevate the observed average discount rates. In this case, the trends might not reflect the discounting practices of grocery vendors with more stable or minimal discount policies.
 
+Another potential bias is measurement bias. The consistency and methodology used to calculate discount rates could vary across vendors. For example, some vendors may record only specific types of discounts, such as seasonal promotions or store-wide discounts, while excluding others. This inconsistency could distort the average discount rates, especially if certain vendors include a broader range of discounts in their reporting.
 
+Finally, Simpson's Paradox, as illustrated in @fig-daily, indicates an aggregation bias in our analysis. While the aggregate trend might suggest an overall stability or gradual increase in discount rates, individual vendors display unique trends that differ from the aggregate. This phenomenon emphasizes the need to disaggregate data to understand vendor-specific behaviors accurately, as aggregation can obscure meaningful individual patterns.
 
-
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-library(rstanarm)
-
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
-```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
-```
-
-
-
-
-# Discussion
-
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-Please don't use these as sub-heading labels - change them to be what your point actually is.
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
-
-\newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
-```
+Recognizing these biases is crucial to interpret the data cautiously. Selection, measurement, and aggregation biases can each impact the observed trends and conclusions. Future research should attempt to mitigate these biases by diversifying the sample of vendors, standardizing discount measurement methods, and disaggregating data where appropriate to provide a more accurate and representative analysis of discount trends in the grocery sector.
 
 
 

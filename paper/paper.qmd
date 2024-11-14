@@ -1,7 +1,10 @@
 ---
 title: "Comparative Analysis of Discount Rates Across Grocery Vendors"
 author: 
-  - Ariel Xing - Xinxiang Gao - John Zhang -Haoan Wang 
+  - Ariel Xing 
+  - Xinxiang Gao 
+  - John Zhang 
+  - Haoan Wang 
 thanks: "Code and data are available at: https://github.com/Jiaqi-Xing/Grocery-Prices-analysis"
 date: today
 date-format: long
@@ -35,12 +38,13 @@ Prior research has examined the role of discounting in retail, with findings sug
 This study utilizes a dataset containing monthly average discount rates from eight major grocery vendors. Through graphical analysis, we examine each vendor's average discount rate, track monthly changes, and identify instances of Simpson's Paradox within the data. Our key finding is that vendors exhibit distinct average discount levels and unique month-to-month patterns in discounting. This variability, obscured by aggregated trends, underscores the importance of detailed analyses when evaluating discount practices across retailers.
 
 Understanding these trends is important for retailers, consumers, and policymakers as it sheds light on the dynamics of discount strategies. For consumers, knowing which vendors offer higher or more stable discounts can guide purchasing decisions. For retailers, recognizing competitive discounting patterns can inform pricing strategies to attract customers. For policymakers, identifying discount trends can reveal aspects of market competitiveness and economic trends within the retail sector. The remainder of this paper is structured as follows: in @sec-data, we describe the dataset in detail, including the context, variables, and measurement approach used to capture real-world phenomena; in @sec-result, we examine the results, presenting key findings through graphs, tables, and statistical analysis; in @sec-discussion, we discuss the implications of our findings, addressing issues such as correlation versus causation, missing data, and potential sources of bias.
-# Data {#sec-data}
+
+# data {#sec-data}
 
 ## Overview
 Our dataset contains detailed observations of product discount rates across eight grocery vendors: TandT, Walmart, SaveOnFoods, Metro, Galleria, Voila, Loblaws, NoFrills, over time. The primary goal of this dataset is to analyze vendor discount behavior and identify trends across various products and time periods. The data has been specifically organized to facilitate comparisons in average discount rates, with a focus on tracking fluctuations over daily and monthly timeframes for each vendor.
 
-Our data source [@data] was prepared using the SQLite programming language [@sqlite] to facilitate efficient handling and querying. Data simulation, testing, and visualization were performed using R [@citeR], with support from the packages readr [@readr] for data import, ggplot2 [@ggplot2] for plotting, and tidyverse [@tidyverse] for data manipulation. Inspired by the methods discussed in "Telling Stories with Data" [@tellingstories], we applied Simpson's Paradox to explore complex trends and relationships in our analysis.
+Our data source [@data] was prepared using the SQLite programming language [@sqlite] to facilitate efficient handling and querying. Data simulation, testing, and visualization were performed using R [@citeR], with support from the packages readr [@readr], ggplot2 [@ggplot2], tidyverse [@tidyverse], dplyr[@dplyr], validate[@validate]. Inspired by the methods discussed in "Telling Stories with Data" [@tellingstories], we applied Simpson's Paradox to explore complex trends and relationships in our analysis.
 
 ## Measurement
 	

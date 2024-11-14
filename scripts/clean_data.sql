@@ -48,3 +48,15 @@ GROUP BY
     vendor, year, month
 ORDER BY 
     vendor, year, month;
+ 
+CREATE TABLE vendor_daily_avg_discount_rate AS   
+SELECT 
+    vendor,
+    DATE(nowtime) AS date,
+    AVG(discount_rate) AS avg_discount_rate
+FROM 
+    discount_rate
+GROUP BY 
+    vendor, DATE(nowtime)
+ORDER BY 
+    vendor, date;

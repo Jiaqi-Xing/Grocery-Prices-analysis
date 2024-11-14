@@ -39,7 +39,7 @@ SELECT
     vendor,
     strftime('%Y', nowtime) AS year,           
     strftime('%m', nowtime) AS month,     
-    AVG(discount_rate) AS avg_discount_rate
+    COALESCE(AVG(discount_rate),0) AS avg_discount_rate
 FROM 
     discount_rate
 WHERE 
@@ -53,7 +53,7 @@ CREATE TABLE vendor_daily_avg_discount_rate AS
 SELECT 
     vendor,
     DATE(nowtime) AS date,
-    AVG(discount_rate) AS avg_discount_rate
+    COALESCE(AVG(discount_rate),0) AS avg_discount_rate
 FROM 
     discount_rate
 GROUP BY 

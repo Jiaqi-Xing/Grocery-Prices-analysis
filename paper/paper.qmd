@@ -8,7 +8,7 @@ author:
 thanks: "Code and data are available at: https://github.com/Jiaqi-Xing/Grocery-Prices-analysis"
 date: today
 date-format: long
-abstract: "This study examines discount rate patterns among major grocery vendors, analyzing how discount levels vary by vendor and over time. By comparing average discount rates and observing monthly trends, the research highlights notable differences in both the overall discount levels and monthly discounting patterns among vendors. Additionally, a deeper examination reveals evidence of Simpson's Paradox, where aggregated discount trends obscure unique, vendor-specific monthly patterns. These findings provide a clearer understanding of retailer discounting practices, illustrating how vendors balance pricing strategies to attract consumers. This research is important as it informs consumers and businesses on discount dynamics, supporting more informed decision-making in the retail market."
+abstract: "This study examines discount rate patterns among major grocery vendors, analyzing how discount levels vary across vendors and over time. It identifies significant differences in overall discount levels and vendor-specific monthly trends, including evidence of Simpson's Paradox, where aggregated trends obscure unique patterns of Loblaws. These findings reveal how vendors strategically adjust pricing to attract consumers. This research is valuable for informing both consumers and businesses about discounting practices in the retail market"
 format: pdf
 number-sections: true
 bibliography: references.bib

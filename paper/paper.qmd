@@ -28,7 +28,7 @@ vendor_avg <- read_csv("../data/Analysis_data/vendor_avg_discount_rate.csv")
 
 vendor_monthly_avg <- read_csv("../data/Analysis_data/vendor_monthly_avg_discount_rate.csv") 
 
-vendor_daily_avg <- read_csv("../data/Analysis_data/vendor_daily_avg_discount_rate.csv")        
+vendor_daily_avg <- read_csv("../data/Analysis_data/vendor_daily_avg_discount_rate.csv")   
 ```
 # Introduction
 In today’s competitive retail market, discounting has become a prevalent strategy for attracting and retaining customers. Major grocery vendors utilize discounting not only to drive immediate sales but also to build customer loyalty over time. Understanding the patterns and trends in discount rates across various retailers can provide valuable information about broader pricing strategies and the economic factors influencing these strategies. However, while discount rates offer useful data for consumers, they also present complexities, especially when comparing multiple vendors with distinct business models and market approaches. This paper seeks to address these complexities by exploring discount trends among several major grocery vendors.
@@ -85,7 +85,7 @@ ggplot(vendor_avg, aes(x = reorder(vendor, avg_discount_rate), y = avg_discount_
     coord_flip() 
 ```
 
-The bar plot(@fig-total) illustrates the average discount rate offered by each vendor. TandT and Walmart have the highest average discount rates, suggesting they tend to offer more substantial discounts than other vendors. On the other hand, NoFrills and Loblaws exhibit lower average discount rates, indicating a more conservative approach to discounting. The differences in average discount rates across vendors highlight varying discounting strategies that may be influenced by each vendor's pricing policies, target market, or competitive positioning.
+@fig-total illustrates the average discount rate offered by each vendor. TandT and Walmart have the highest average discount rates, suggesting they tend to offer more substantial discounts than other vendors. On the other hand, NoFrills and Loblaws exhibit lower average discount rates, indicating a more conservative approach to discounting. The differences in average discount rates across vendors highlight varying discounting strategies that may be influenced by each vendor's pricing policies, target market, or competitive positioning.
 
 ```{r}
 #| label: fig-monthly
@@ -108,26 +108,29 @@ ggplot(vendor_monthly_avg, aes(x = date, y = avg_discount_rate, color = vendor, 
     scale_x_date(date_labels = "%Y-%m", date_breaks = "1 month") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-The line graph(@fig-monthly) tracks the monthly average discount rate for each vendor over the observed time period. We see considerable month-to-month variation in discount rates for certain vendors, particularly for SaveOnFoods, which shows a significant dip around July 2024, and Walmart, which reaches a peak around August 2024. The fluctuating patterns suggest that some vendors adjust their discount rates dynamically in response to factors such as seasonal demand, competitive pricing, or inventory levels. The chart provides a detailed view of how each vendor's discount strategy evolves over time, with some vendors maintaining more stable rates and others showing notable shifts across the months.
+@fig-monthly tracks the monthly average discount rate for each vendor over the observed time period. We see considerable month-to-month variation in discount rates for certain vendors, particularly for SaveOnFoods, which shows a significant dip around July 2024, and Walmart, which reaches a peak around August 2024. The fluctuating patterns suggest that some vendors adjust their discount rates dynamically in response to factors such as seasonal demand, competitive pricing, or inventory levels. The chart provides a detailed view of how each vendor's discount strategy evolves over time, with some vendors maintaining more stable rates and others showing notable shifts across the months.
 ```{r}
 #| label: fig-paradox
-#| fig-cap: Relationship between wing length and width
+#| fig-cap: "Trends in Vendor Discount Rates Over Time: Solid lines represent within-vendor trends, while the dashed black line indicates the overall trend across all vendors."
 #| echo: false
 #| warning: false
 #| message: false
 #| fig-pos: "H"
+Sys.setlocale("LC_TIME", "C")
 ggplot(vendor_daily_avg, aes(x = as.Date(date), y = avg_discount_rate, color = vendor)) +
   geom_point(alpha = 0.5) +
-  geom_smooth(aes(group = vendor), method = "lm", se = FALSE) +  # Within-vendor trend lines
-  geom_smooth(data = vendor_daily_avg, aes(x = as.Date(date), y = avg_discount_rate), 
-              method = "lm", color = "black", linetype = "dashed", se = FALSE) +  # Overall trend line
+  geom_smooth(aes(group = vendor), method = "lm", se = FALSE) + # Within-vendor trend lines
+  geom_smooth(data = vendor_daily_avg, aes(x = as.Date(date), y = avg_discount_rate),
+              method = "lm", color = "black", linetype = "dashed", se = FALSE) + # Overall trend line
+  scale_x_date(date_labels = "%b", # Format x-axis labels to show month names (e.g., Jan, Feb)
+               date_breaks = "1 month") + # Add breaks at each month
   labs(title = "Simpson's Paradox: Vendor Discount Trends",
-       x = "Date",
+       x = "Month",
        y = "Average Discount Rate",
        color = "Vendor") +
   theme_minimal()
 ```
-The scatter plot(@fig-paradox) with trend lines illustrates the discount rates of various vendors over time, revealing an instance of Simpson's Paradox. While the overall trend may suggest a gradual increase or stable average discount rate, the individual vendor trends differ significantly. For example, some vendors exhibit a more consistent discount rate (such as Loblaws and Metro), while others, like TandT and Walmart, show more variability. This discrepancy between aggregate and individual trends highlights the importance of examining vendor-specific data to avoid drawing misleading conclusions from the aggregate trend alone.
+@fig-paradox with trend lines illustrates the discount rates of various vendors over time, revealing an instance of Simpson's Paradox. While the overall trend may suggest a gradual increase or stable average discount rate, the individual vendor trends differ significantly. For example, some vendors exhibit a more consistent discount rate (such as Loblaws and Metro), while others, like TandT and Walmart, show more variability. This discrepancy between aggregate and individual trends highlights the importance of examining vendor-specific data to avoid drawing misleading conclusions from the aggregate trend alone.
 
 # Discussion{#sec-discussion}
 

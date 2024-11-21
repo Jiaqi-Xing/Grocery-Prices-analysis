@@ -16,5 +16,5 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-In developing this analysis, large language models (LLMs) were used to assist with generating written explanations and structuring documentation, including this README. The LLM contributions included generating descriptions of the data analysis workflow, highlighting key findings, and drafting sections for clear communication. All technical data processing, statistical analysis, and interpretation of results were conducted independently by the researchers using industry-standard tools and methodologies.The entire chat history is available in inputs/llms/usage.txt.
+In developing this analysis, large language models (LLMs) were used to assist with generating written explanations and structuring documentation, including this README. The LLM contributions included generating descriptions of the data analysis workflow, highlighting key findings, and drafting sections for clear communication. All technical data processing, statistical analysis, and interpretation of results were conducted independently by the researchers using industry-standard tools and methodologies.The entire chat history is available in other/llms_usage/usage.txt.
 
